@@ -23,10 +23,6 @@ export type FunctionSignatureAst = AstNode<"FunctionSignature"> & {
 
 export type TypeDeclarationAst = ValueSignatureAst | FunctionSignatureAst
 
-export type ProgramAst = AstNode<"Program"> & {
-  readonly body: TypeDeclarationAst[]
-}
-
 export function createIdentifier(text: string): IdentifierAst {
   return {
     text,
@@ -55,12 +51,5 @@ export function createFunctionSignature(name: IdentifierAst, body: LambdaExpress
     body,
     name,
     type: "FunctionSignature",
-  }
-}
-
-export function createProgram(body: TypeDeclarationAst[]): ProgramAst {
-  return {
-    body,
-    type: "Program",
   }
 }
