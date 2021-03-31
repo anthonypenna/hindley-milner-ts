@@ -31,11 +31,7 @@ export function createIdentifier(text: string): IdentifierAst {
   }
 }
 
-export function createLambdaExpression(
-  generics: IdentifierAst[],
-  parameters: IdentifierAst[],
-  result: IdentifierAst
-): LambdaExpressionAst {
+export function createLambdaExpression(generics: IdentifierAst[], parameters: IdentifierAst[], result: IdentifierAst): LambdaExpressionAst {
   return {
     generics,
     parameters,

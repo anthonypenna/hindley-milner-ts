@@ -47,13 +47,7 @@ const INVALID_LAMBDA_EXPRESSION_INPUTS = INVALID_IDENTIFIER_INPUTS.concat(
   "forall !@# !@#. -> !@# -> !@#"
 )
 
-const INVALID_VALUE_SIGNATURE_INPUTS = INVALID_IDENTIFIER_INPUTS.concat(
-  "count",
-  "count :: 123",
-  "count :: !@#",
-  "123 :: count",
-  "!@# :: count"
-)
+const INVALID_VALUE_SIGNATURE_INPUTS = INVALID_IDENTIFIER_INPUTS.concat("count", "count :: 123", "count :: !@#", "123 :: count", "!@# :: count")
 
 const INVALID_FUNCTION_SIGNATURE_INPUTS = INVALID_IDENTIFIER_INPUTS.concat(
   "sum",
@@ -76,17 +70,13 @@ const INVALID_FUNCTION_SIGNATURE_INPUTS = INVALID_IDENTIFIER_INPUTS.concat(
   "sum :: !@# -> !@#"
 )
 
-const INVALID_SIGNATURE_INPUTS = Array.from(
-  new Set(...INVALID_FUNCTION_SIGNATURE_INPUTS, ...INVALID_VALUE_SIGNATURE_INPUTS)
-)
+const INVALID_SIGNATURE_INPUTS = Array.from(new Set(...INVALID_FUNCTION_SIGNATURE_INPUTS, ...INVALID_VALUE_SIGNATURE_INPUTS))
 
 describe("Parser", () => {
   describe("Language", () => {
     describe("Identifier", () => {
       it("throws an error on parse fail", () => {
-        INVALID_IDENTIFIER_INPUTS.map(input => () => parser.identifier.tryParse(input)).forEach(io =>
-          expect(io).toThrow()
-        )
+        INVALID_IDENTIFIER_INPUTS.map(input => () => parser.identifier.tryParse(input)).forEach(io => expect(io).toThrow())
       })
 
       it("returns an identifier ast on parse success", () => {
@@ -98,9 +88,7 @@ describe("Parser", () => {
 
     describe("LambdaExpression", () => {
       it("throws an error on parse fail", () => {
-        INVALID_LAMBDA_EXPRESSION_INPUTS.map(input => () => parser.lambdaExpression.tryParse(input)).forEach(io =>
-          expect(io).toThrow()
-        )
+        INVALID_LAMBDA_EXPRESSION_INPUTS.map(input => () => parser.lambdaExpression.tryParse(input)).forEach(io => expect(io).toThrow())
       })
 
       it("returns a lambda expression ast on parse success", () => {
@@ -115,9 +103,7 @@ describe("Parser", () => {
 
     describe("ValueSignature", () => {
       it("throws an error on parse fail", () => {
-        INVALID_VALUE_SIGNATURE_INPUTS.map(input => () => parser.valueSignature.tryParse(input)).forEach(io =>
-          expect(io).toThrow()
-        )
+        INVALID_VALUE_SIGNATURE_INPUTS.map(input => () => parser.valueSignature.tryParse(input)).forEach(io => expect(io).toThrow())
       })
 
       it("returns a value signature ast on parse success", () => {
@@ -130,9 +116,7 @@ describe("Parser", () => {
 
     describe("FunctionSignature", () => {
       it("throws an error on parse fail", () => {
-        INVALID_FUNCTION_SIGNATURE_INPUTS.map(input => () => parser.functionSignature.tryParse(input)).forEach(io =>
-          expect(io).toThrow()
-        )
+        INVALID_FUNCTION_SIGNATURE_INPUTS.map(input => () => parser.functionSignature.tryParse(input)).forEach(io => expect(io).toThrow())
       })
 
       it("returns a function signature ast on parse success", () => {
@@ -147,9 +131,7 @@ describe("Parser", () => {
 
     describe("Signature", () => {
       it("throws an error on parse fail", () => {
-        INVALID_SIGNATURE_INPUTS.map(input => () => parser.signature.tryParse(input)).forEach(io =>
-          expect(io).toThrow()
-        )
+        INVALID_SIGNATURE_INPUTS.map(input => () => parser.signature.tryParse(input)).forEach(io => expect(io).toThrow())
       })
 
       it("returns a value signature ast on parse success", () => {

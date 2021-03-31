@@ -1,11 +1,4 @@
-import {
-  IdentifierAst,
-  createFunctionSignature,
-  createIdentifier,
-  createLambdaExpression,
-  createValueSignature,
-} from "@/compiler/AST"
-
+import { IdentifierAst, createFunctionSignature, createIdentifier, createLambdaExpression, createValueSignature } from "@/compiler/AST"
 import { emitFunctionSignature, emitIdentifier, emitLambdaExpression, emitValueSignature } from "@/compiler/Emitter"
 
 describe("Emitter", () => {

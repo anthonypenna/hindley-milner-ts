@@ -2,7 +2,7 @@
   "arrowParens": "avoid",
   "bracketSpacing": true,
   "parser":"typescript",
-  "printWidth": 120,
+  "printWidth": 150,
   "semi": false,
   "singleQuote": false,
   "tabWidth": 2,
