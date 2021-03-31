@@ -1,3 +1,3 @@
 # hindley-milner-ts
 
-Generate Typescript type declarations using Hindley Milner's type signature syntax.
+Generate Typescript declarations using a Hindley Milner like syntax.
