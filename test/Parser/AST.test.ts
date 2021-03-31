@@ -13,10 +13,12 @@ describe("AST", () => {
 
   describe("createLambdaExpression", () => {
     it("returns a lambda expression ast", () => {
-      const parameters = [AST.createIdentifier("number"), AST.createIdentifier("number")]
-      const result = AST.createIdentifier("number")
-      const ast = AST.createLambdaExpression(parameters, result)
+      const generics = [AST.createIdentifier("a")]
+      const parameters = [AST.createIdentifier("a"), AST.createIdentifier("a")]
+      const result = AST.createIdentifier("a")
+      const ast = AST.createLambdaExpression(generics, parameters, result)
       expect(ast).toEqual<AST.LambdaExpressionAst>({
+        generics,
         parameters,
         result,
         type: "LambdaExpression",
@@ -39,10 +41,11 @@ describe("AST", () => {
 
   describe("createFunctionSignature", () => {
     it("returns a function signature ast", () => {
-      const name = AST.createIdentifier("sum")
-      const parameters = [AST.createIdentifier("number"), AST.createIdentifier("number")]
-      const result = AST.createIdentifier("number")
-      const body = AST.createLambdaExpression(parameters, result)
+      const name = AST.createIdentifier("concat")
+      const generics = [AST.createIdentifier("a")]
+      const parameters = [AST.createIdentifier("a"), AST.createIdentifier("a")]
+      const result = AST.createIdentifier("a")
+      const body = AST.createLambdaExpression(generics, parameters, result)
       const ast = AST.createFunctionSignature(name, body)
       expect(ast).toEqual<AST.FunctionSignatureAst>({
         body,

@@ -10,21 +10,40 @@ export type Language = {
 
 export const language = P.createLanguage<Language>({
   identifier: () =>
-    P.regex(/[a-z]+/)
+    P.regex(/[a-zA-Z]+/)
       .map(AST.createIdentifier)
       .trim(P.optWhitespace)
       .desc("identifier"),
 
   lambdaExpression: r =>
-    r.identifier.skip(P.string("->")).chain(head => {
-      return r.identifier.sepBy1(P.string("->")).map(tail => {
-        const results = [head].concat(tail)
-        const lastIndex = results.length - 1
-        const parameters = results.slice(0, lastIndex)
-        const result = results[lastIndex]
-        return AST.createLambdaExpression(parameters, result)
+    P.alt(
+      P.string("forall").chain(() =>
+        r.identifier
+          .atLeast(1)
+          .skip(P.string("."))
+          .chain(generics =>
+            r.identifier.skip(P.string("->")).chain(head => {
+              return r.identifier.sepBy1(P.string("->")).map(tail => {
+                const results = [head].concat(tail)
+                const lastIndex = results.length - 1
+                const parameters = results.slice(0, lastIndex)
+                const result = results[lastIndex]
+                return AST.createLambdaExpression(generics, parameters, result)
+              })
+            })
+          )
+      ),
+      r.identifier.skip(P.string("->")).chain(head => {
+        return r.identifier.sepBy1(P.string("->")).map(tail => {
+          const generics: AST.IdentifierAst[] = []
+          const results = [head].concat(tail)
+          const lastIndex = results.length - 1
+          const parameters = results.slice(0, lastIndex)
+          const result = results[lastIndex]
+          return AST.createLambdaExpression(generics, parameters, result)
+        })
       })
-    }),
+    ),
 
   valueSignature: r =>
     r.identifier
@@ -38,7 +57,7 @@ export const language = P.createLanguage<Language>({
 
   functionSignature: r =>
     r.identifier
-      .skip(P.string("::"))
+      .skip(P.string("::").trim(P.optWhitespace))
       .chain(name => {
         return r.lambdaExpression.map(body => {
           return AST.createFunctionSignature(name, body)

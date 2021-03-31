@@ -7,6 +7,7 @@ export type IdentifierAst = AstNode<"Identifier"> & {
 }
 
 export type LambdaExpressionAst = AstNode<"LambdaExpression"> & {
+  readonly generics: IdentifierAst[]
   readonly parameters: IdentifierAst[]
   readonly result: IdentifierAst
 }
@@ -30,8 +31,13 @@ export function createIdentifier(text: string): IdentifierAst {
   }
 }
 
-export function createLambdaExpression(parameters: IdentifierAst[], result: IdentifierAst): LambdaExpressionAst {
+export function createLambdaExpression(
+  generics: IdentifierAst[],
+  parameters: IdentifierAst[],
+  result: IdentifierAst
+): LambdaExpressionAst {
   return {
+    generics,
     parameters,
     result,
     type: "LambdaExpression",
