@@ -1,5 +1,5 @@
-import * as AST from "../../src/Parser/AST"
-import * as Parser from "../../src/Parser/Language"
+import * as AST from "@/Parser/AST"
+import * as Parser from "@/Parser/Language"
 
 const INVALID_IDENTIFIER_INPUTS = ["", "123", "!@#"]
 

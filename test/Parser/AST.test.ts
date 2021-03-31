@@ -1,4 +1,4 @@
-import * as AST from "../../src/Parser/AST"
+import * as AST from "@/Parser/AST"
 
 describe("AST", () => {
   describe("createIdentifier", () => {
