@@ -6,6 +6,7 @@ export type Language = {
   readonly lambdaExpression: AST.LambdaExpressionAst
   readonly valueSignature: AST.ValueSignatureAst
   readonly functionSignature: AST.FunctionSignatureAst
+  readonly signature: AST.TypeDeclarationAst
 }
 
 export const language = P.createLanguage<Language>({
@@ -64,4 +65,6 @@ export const language = P.createLanguage<Language>({
         })
       })
       .trim(P.alt(P.optWhitespace, P.newline)),
+
+  signature: r => P.alt(r.functionSignature, r.valueSignature),
 })

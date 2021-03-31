@@ -66,6 +66,10 @@ const INVALID_FUNCTION_SIGNATURE_INPUTS = INVALID_IDENTIFIER_INPUTS.concat(
   "sum :: !@# -> !@#"
 )
 
+const INVALID_SIGNATURE_INPUTS = Array.from(
+  new Set(...INVALID_FUNCTION_SIGNATURE_INPUTS, ...INVALID_VALUE_SIGNATURE_INPUTS)
+)
+
 describe("Parser", () => {
   describe("Identifier", () => {
     it("throws an error on parse fail", () => {
@@ -122,6 +126,30 @@ describe("Parser", () => {
 
     it("returns a function signature ast on parse success", () => {
       const node = Parser.language.functionSignature.tryParse("sum :: number -> number -> number")
+      const name = AST.createIdentifier("sum")
+      const parameters = [AST.createIdentifier("number"), AST.createIdentifier("number")]
+      const result = AST.createIdentifier("number")
+      const body = AST.createLambdaExpression([], parameters, result)
+      expect(node).toEqual<AST.FunctionSignatureAst>(AST.createFunctionSignature(name, body))
+    })
+  })
+
+  describe("Signature", () => {
+    it("throws an error on parse fail", () => {
+      INVALID_SIGNATURE_INPUTS.map(input => () => Parser.language.signature.tryParse(input)).forEach(io =>
+        expect(io).toThrow()
+      )
+    })
+
+    it("returns a value signature ast on parse success", () => {
+      const node = Parser.language.signature.tryParse("count :: number")
+      const name = AST.createIdentifier("count")
+      const value = AST.createIdentifier("number")
+      expect(node).toEqual<AST.ValueSignatureAst>(AST.createValueSignature(name, value))
+    })
+
+    it("returns a function signature ast on parse success", () => {
+      const node = Parser.language.signature.tryParse("sum :: number -> number -> number")
       const name = AST.createIdentifier("sum")
       const parameters = [AST.createIdentifier("number"), AST.createIdentifier("number")]
       const result = AST.createIdentifier("number")
