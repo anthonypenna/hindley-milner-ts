@@ -22,7 +22,9 @@ export type FunctionSignatureAst = AstNode<"FunctionSignature"> & {
   readonly body: LambdaExpressionAst
 }
 
-export type TypeDeclarationAst = ValueSignatureAst | FunctionSignatureAst
+export type TypeDeclarationAst = FunctionSignatureAst | ValueSignatureAst
+
+export type TypeDeclarationMap<F, V> = { Function: (fs: FunctionSignatureAst) => F; Value: (vs: ValueSignatureAst) => V }
 
 export function createIdentifier(text: string): IdentifierAst {
   return {
@@ -53,5 +55,16 @@ export function createFunctionSignature(name: IdentifierAst, body: LambdaExpress
     body,
     name,
     type: "FunctionSignature",
+  }
+}
+
+export function foldTypeDeclaration<F, V>(caseof: TypeDeclarationMap<F, V>): (typeDeclaration: TypeDeclarationAst) => F | V {
+  return typeDeclaration => {
+    switch (typeDeclaration.type) {
+      case "FunctionSignature":
+        return caseof.Function(typeDeclaration)
+      case "ValueSignature":
+        return caseof.Value(typeDeclaration)
+    }
   }
 }
